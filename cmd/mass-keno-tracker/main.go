@@ -23,7 +23,6 @@ func main() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-
 	MASS_KENO_TODAYS_DRAWS_URL = os.Getenv("MASS_KENO_TODAYS_DRAWS_URL")
 	if MASS_KENO_TODAYS_DRAWS_URL == "" {
 		MASS_KENO_TODAYS_DRAWS_URL = "http://www.masslottery.com/data/json/search/dailygames/todays/15.json"
