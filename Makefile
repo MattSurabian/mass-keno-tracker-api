@@ -56,7 +56,7 @@ IMAGE := $(REGISTRY)/$(BIN)-$(ARCH)
 
 BUILD_IMAGE ?= golang:1.7-alpine
 
-.PHONY: network-start network-rm
+.PHONY: network-start network-rm redis-start redis-stop redis-rm redis-logs
 
 # If you want to build all binaries, see the 'all-build' rule.
 # If you want to build all containers, see the 'all-container' rule.
@@ -166,4 +166,14 @@ network-start:
 network-rm:
 	cd tasks && ./network-rm.sh
 
+redis-start:
+	cd tasks && ./redis-start.sh
 
+redis-stop:
+	cd tasks && ./redis-stop.sh
+
+redis-rm:
+	cd tasks && ./redis-rm.sh
+
+redis-logs:
+	docker logs mass-keno-redis

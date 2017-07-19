@@ -11,7 +11,7 @@ import (
 )
 
 // global config values
-var MASS_KENO_TODAYS_DRAWS_URL, MASS_KENO_HISTORY_MANIFEST_URL, MASS_KENO_MONTHLY_MANIFEST_BASE_URL, GO_ENV string
+var MASS_KENO_TODAYS_DRAWS_URL, MASS_KENO_HISTORY_MANIFEST_URL, MASS_KENO_MONTHLY_MANIFEST_BASE_URL, MASS_KENO_REDIS_ADDRESS, MASS_KENO_REDIS_PW, GO_ENV string
 
 func main() {
 	GO_ENV = os.Getenv("GO_ENV")
@@ -36,6 +36,16 @@ func main() {
 	MASS_KENO_MONTHLY_MANIFEST_BASE_URL = os.Getenv("MASS_KENO_MONTHLY_MANIFEST_BASE_URL")
 	if MASS_KENO_MONTHLY_MANIFEST_BASE_URL == "" {
 		MASS_KENO_MONTHLY_MANIFEST_BASE_URL = "http://www.masslottery.com/data/json/search/dailygames/history/15/"
+	}
+
+	MASS_KENO_REDIS_ADDRESS = os.Getenv("MASS_KENO_REDIS_ADDRESS")
+	MASS_KENO_REDIS_PW = os.Getenv("MASS_KENO_REDIS_PW")
+
+	if MASS_KENO_REDIS_ADDRESS == "" {
+		log.Fatal("MASS_KENO_REDIS_ADDRESS must be set")
+	} else {
+		redis_smoke_test_conn := GetRedisConnection()
+		redis_smoke_test_conn.Close()
 	}
 
 	httpAddr := os.Getenv("MASS_KENO_HTTP_ADDR")
