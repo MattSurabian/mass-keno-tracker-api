@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"github.com/braintree/manners"
 	"gopkg.in/gin-gonic/gin.v1"
@@ -11,7 +12,7 @@ import (
 )
 
 // global config values
-var MASS_KENO_TODAYS_DRAWS_URL, MASS_KENO_HISTORY_MANIFEST_URL, MASS_KENO_MONTHLY_MANIFEST_BASE_URL, MASS_KENO_REDIS_ADDRESS, MASS_KENO_REDIS_PW, GO_ENV string
+var MASS_KENO_TODAYS_DRAWS_URL, MASS_KENO_HISTORY_MANIFEST_URL, MASS_KENO_MONTHLY_MANIFEST_BASE_URL, MASS_KENO_REDIS_ADDRESS, MASS_KENO_REDIS_PW, MASS_KENO_ES_ADDRESS, MASS_KENO_ES_USER, MASS_KENO_ES_PASS, GO_ENV string
 
 func main() {
 	GO_ENV = os.Getenv("GO_ENV")
@@ -46,6 +47,24 @@ func main() {
 	} else {
 		redis_smoke_test_conn := GetRedisConnection()
 		redis_smoke_test_conn.Close()
+	}
+
+	MASS_KENO_ES_USER = os.Getenv("MASS_KENO_ES_USER")
+	MASS_KENO_ES_PASS = os.Getenv("MASS_KENO_ES_PASS")
+	MASS_KENO_ES_ADDRESS = os.Getenv("MASS_KENO_ES_ADDRESS")
+
+	if MASS_KENO_ES_ADDRESS == "" {
+		log.Fatal("MASS_KENO_ES_ADDRESS must be set!")
+	} else {
+		es_client_smoke_test := GetEsClient()
+		res, err := es_client_smoke_test.ClusterHealth().Do(context.Background())
+		if err != nil {
+			log.Fatal(err)
+		}
+		if res == nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("Elasticsearch cluster status is %q\n", res.Status)
 	}
 
 	httpAddr := os.Getenv("MASS_KENO_HTTP_ADDR")
