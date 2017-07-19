@@ -56,6 +56,8 @@ IMAGE := $(REGISTRY)/$(BIN)-$(ARCH)
 
 BUILD_IMAGE ?= golang:1.7-alpine
 
+.PHONY: network-start network-rm
+
 # If you want to build all binaries, see the 'all-build' rule.
 # If you want to build all containers, see the 'all-container' rule.
 # If you want to build AND push all containers, see the 'all-push' rule.
@@ -138,6 +140,7 @@ test: build-dirs
 	    -v $$(pwd)/bin/$(ARCH):/go/bin                                     \
 	    -v $$(pwd)/.go/std/$(ARCH):/usr/local/go/pkg/linux_$(ARCH)_static  \
 	    -w /go/src/$(PKG)                                                  \
+	    --network mass-keno                                                \
 	    $(BUILD_IMAGE)                                                     \
 	    /bin/sh -c "                                                       \
 	        ./tasks/test.sh $(SRC_DIRS)                                    \
@@ -155,5 +158,12 @@ container-clean:
 bin-clean:
 	rm -rf .go bin
 
-init: build-dirs
+init: build-dirs network-start
+
+network-start:
+	cd tasks && ./network-start.sh
+
+network-rm:
+	cd tasks && ./network-rm.sh
+
 
