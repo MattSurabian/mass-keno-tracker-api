@@ -34,14 +34,14 @@ func TestVersionedEndpointHandler(t *testing.T) {
 	assert.Equal(t, StatusResponse501.Status, w.Code)
 }
 
-func RunEndpointTest(t *testing.T, request *http.Request, status int, response string) {
+func RunEndpointTest(t *testing.T, request *http.Request, expectedStatus int, expectedResponse string) {
 	w := httptest.NewRecorder()
 	r := GetRouter()
 
 	r.ServeHTTP(w, request)
 
-	assert.Equal(t, status, w.Code)
-	if response != "" {
-		assert.Equal(t, string(response), w.Body.String())
+	assert.Equal(t, expectedStatus, w.Code)
+	if expectedResponse != "" {
+		assert.Equal(t, string(expectedResponse), w.Body.String())
 	}
 }
