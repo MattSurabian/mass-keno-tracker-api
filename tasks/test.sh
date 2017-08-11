@@ -20,6 +20,7 @@ set -o pipefail
 
 export CGO_ENABLED=0
 
+export REDIS_CACHE_HOST=mass-keno-redis:6379
 export MASS_KENO_ES_ADDRESS=http://mass-keno-es:9200
 export MASS_KENO_ES_USER=elastic
 export MASS_KENO_ES_PASS=changeme

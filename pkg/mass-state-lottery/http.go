@@ -1,4 +1,4 @@
-package main
+package mass_state_lottery
 
 import (
 	"encoding/json"
@@ -8,8 +8,8 @@ import (
 
 var httpClient = &http.Client{
 	Transport: &http.Transport{
-		MaxIdleConns:          100,
-		MaxIdleConnsPerHost:   100,
+		MaxIdleConns:          50,
+		MaxIdleConnsPerHost:   50,
 		IdleConnTimeout:       120 * time.Second,
 		ResponseHeaderTimeout: 60 * time.Second,
 	},

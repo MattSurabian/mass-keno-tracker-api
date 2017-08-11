@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker stop mass-keno-redis
+docker stop mass-keno-redis || exit 0

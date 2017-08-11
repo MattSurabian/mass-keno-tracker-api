@@ -9,14 +9,14 @@ LOCAL_REDIS_CONF=$PWD/../volumes/redis/redis.conf
 CONTAINER_REDIS_CONF=/usr/local/etc/redis/redis.conf
 
 if [ "$(docker ps -aq -f status=running -f name=$NAME)" ]; then
-  echo "Found running $NAME server! Run rm-es to destroy. Skipping..."
-  exit 1;
+  echo "Found running $NAME server! Run rm-redis to destroy. Skipping..."
+  exit 0;
 fi
 
 if [ "$(docker ps -aq -f status=exited -f name=$NAME)" ]; then
   echo "Found shut down $NAME server. Restarting..."
   docker start $NAME
-  echo "Run rm-es to destroy..."
+  echo "Run rm-redis to destroy..."
 else
   echo "Starting new $NAME server..."
   docker                                       \

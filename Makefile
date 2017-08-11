@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # The binary to build (just the basename).
-BIN := mass-keno-tracker
+BIN := mass-keno-tracker-api
 
 # This repo's root import path (under GOPATH).
 PKG := github.com/mattsurabian/mass-keno-tracker
@@ -25,16 +25,16 @@ REGISTRY ?= mattsurabian
 ARCH ?= amd64
 
 # This version-strategy uses git tags to set the version string
-#VERSION := $(shell git describe --tags --always --dirty)
+VERSION := $(shell git describe --tags --always --dirty)
 #
 # This version-strategy uses a manual value to set the version string
-VERSION := 1.0.0
+#VERSION := 1.0.0
 
 ###
 ### These variables should not need tweaking.
 ###
 
-SRC_DIRS := cmd # directories which hold app source (not vendored)
+SRC_DIRS := cmd pkg # directories which hold app source (not vendored)
 
 ALL_ARCH := amd64 arm arm64 ppc64le
 
@@ -56,7 +56,7 @@ IMAGE := $(REGISTRY)/$(BIN)-$(ARCH)
 
 BUILD_IMAGE ?= golang:1.7-alpine
 
-.PHONY: network-start network-rm redis-start redis-stop redis-rm redis-logs es-start es-stop es-rm es-logs
+.PHONY: network-start network-rm redis-start redis-stop redis-rm redis-logs es-start es-stop es-rm es-logs start stop destroy
 
 # If you want to build all binaries, see the 'all-build' rule.
 # If you want to build all containers, see the 'all-container' rule.
@@ -152,6 +152,8 @@ build-dirs:
 
 clean: container-clean bin-clean
 
+destroy: stop clean network-rm redis-rm es-rm
+
 container-clean:
 	rm -rf .container-* .dockerfile-* .push-*
 
@@ -176,7 +178,7 @@ redis-rm:
 	cd tasks && ./redis-rm.sh
 
 redis-logs:
-	docker logs mass-keno-redis
+	@docker logs mass-keno-redis
 
 es-start:
 	cd tasks && ./es-start.sh
@@ -189,3 +191,9 @@ es-rm:
 
 es-logs:
 	@docker logs mass-keno-es
+
+start: init container redis-start
+	cd tasks && ./api-start.sh
+
+stop: redis-stop
+	cd tasks && ./api-stop.sh
