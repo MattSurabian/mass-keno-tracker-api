@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/mattsurabian/mass-keno-tracker/pkg/keno-tracker"
 	"gopkg.in/gin-gonic/gin.v1"
-	"log"
 	"net/http"
 	"sync"
 )
@@ -42,7 +41,6 @@ func healthHandlerV1(c *gin.Context) {
 }
 
 func healthCheck() {
-	log.Printf("%s", keno_tracker.IsCacheVolatile())
 	if keno_tracker.IsCacheVolatile() {
 		// Scheduled maintenance like an etl process, temporary 503
 		SetHealthStatus(http.StatusServiceUnavailable)
