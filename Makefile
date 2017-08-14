@@ -62,8 +62,6 @@ BUILD_IMAGE ?= golang:1.7-alpine
 # If you want to build all containers, see the 'all-container' rule.
 # If you want to build AND push all containers, see the 'all-push' rule.
 all: init start
-	@echo "Mass Keno Tracker API now running on port 8088"
-	curl localhost:8088/v1/health && echo
 
 build-%:
 	@$(MAKE) --no-print-directory ARCH=$* build
