@@ -54,7 +54,7 @@ func FetchAllHistoricData() {
 	close(in)
 	wg.Wait()
 
-	if len(historyManifest.DrawingDates) == 0 {
+	if len(historyManifest.DrawingDates) != 0 {
 		RedisCache.SetString("ingest-last", fmt.Sprintf("%d%02d", historyManifest.DrawingDates[len(historyManifest.DrawingDates)-1].Year, historyManifest.DrawingDates[len(historyManifest.DrawingDates)-1].EndMonth), 0)
 
 		log.Printf("Historic data sets from %d to %d loaded in: %f seconds",
