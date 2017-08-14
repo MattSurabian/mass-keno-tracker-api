@@ -13,9 +13,12 @@ if [ "$(docker ps -aq -f status=exited -f name=$NAME)" ]; then
 fi
 
 docker run \
+-d \
 -e REDIS_CACHE_HOST=mass-keno-redis:6379 \
--e MASS_KENO_HTTP_ADDR=localhost:8090 \
--p 38090:8090 \
+-e MASS_KENO_HTTP_ADDR=0.0.0.0:8090 \
+-p 8090:8090 \
 --network mass-keno \
 --name $NAME \
 mattsurabian/mass-keno-tracker-api-amd64:$VERSION
+
+echo "Mass Keno Tracker API now running on localhost:8090/v1/health"
