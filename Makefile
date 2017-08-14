@@ -178,6 +178,9 @@ redis-rm:
 redis-logs:
 	@docker logs mass-keno-redis
 
+api-logs:
+	@docker logs mass-keno-api
+
 es-start:
 	cd tasks && ./es-start.sh
 
