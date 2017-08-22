@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/mattsurabian/mass-keno-tracker/pkg/keno-tracker"
 	"gopkg.in/gin-gonic/gin.v1"
+	"log"
 )
 
 var TodaysEndpoint = &VersionedEndpoint{
@@ -14,6 +15,7 @@ var TodaysEndpoint = &VersionedEndpoint{
 func todaysHandlerV1(c *gin.Context) {
 	todaysManifest, err := keno_tracker.GetTodaysDraws()
 	if err != nil {
+		log.Print(err)
 		c.IndentedJSON(StatusResponse500.Status, StatusResponse500)
 		return
 	}

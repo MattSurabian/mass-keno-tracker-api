@@ -49,6 +49,8 @@ func main() {
 	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
 
 	go func() {
+		// Initialize health of service
+		healthCheck()
 		errChan <- httpServer.ListenAndServe()
 	}()
 

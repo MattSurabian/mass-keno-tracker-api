@@ -11,6 +11,9 @@ import (
 	"time"
 )
 
+//init the loc
+var MassTime, _ = time.LoadLocation("America/New_York")
+
 var RedisCache = redis_cache.RedisCacheService{
 	"mass-keno-tracker",
 }
@@ -93,7 +96,13 @@ func GetTodaysDraws() (keno_tracker_models.KenoManifest, error) {
 }
 
 func todaysDateString() string {
-	return time.Now().Format("2006-01-02")
+	// Return time based on where the games are happening not where the app is
+	// deployed to or running in.
+	var MassTime, err = time.LoadLocation("America/New_York")
+	if err != nil {
+		log.Print(err)
+	}
+	return time.Now().In(MassTime).Format("2006-01-02")
 }
 
 func ProcessManifest(manifest *keno_tracker_models.KenoManifest) {
@@ -111,13 +120,13 @@ func ProcessManifest(manifest *keno_tracker_models.KenoManifest) {
 		}
 
 		if currDate != manifestDraw.Date {
-			normalizedDrawId = 0
+			dayManifest.Date = keno_tracker_models.DateStringNormalizer(currDate)
 			dayManifest.EndId = id
 			dayManifests = append(dayManifests, dayManifest)
 
+			normalizedDrawId = 0
 			currDate = manifestDraw.Date
 			dayManifest.StartId = manifestDraw.Id
-			dayManifest.Date = keno_tracker_models.DateStringNormalizer(manifestDraw.Date)
 			dayManifest.Draws = []keno_tracker_models.DrawResponse{}
 		}
 

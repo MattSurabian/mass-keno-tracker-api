@@ -22,5 +22,8 @@ EXPOSE 8090
 
 ADD bin/ARG_ARCH/ARG_BIN /ARG_BIN
 
+ENV TZ="America/New_York"
+RUN apk add --no-cache tzdata
+
 USER nobody:nobody
 ENTRYPOINT ["/ARG_BIN"]
