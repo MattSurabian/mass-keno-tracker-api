@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/braintree/manners"
-	"github.com/mattsurabian/mass-keno-tracker/pkg/keno-tracker-etl"
+	"github.com/mattsurabian/mass-keno-tracker-api/pkg/keno-tracker-etl"
 	"gopkg.in/gin-gonic/gin.v1"
 	"log"
 	"os"

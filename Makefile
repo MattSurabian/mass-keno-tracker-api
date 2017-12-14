@@ -16,7 +16,7 @@
 BIN := mass-keno-tracker-api
 
 # This repo's root import path (under GOPATH).
-PKG := github.com/mattsurabian/mass-keno-tracker
+PKG := github.com/mattsurabian/mass-keno-tracker-api
 
 # Where to push the docker image.
 REGISTRY ?= mattsurabian

@@ -2,9 +2,9 @@ package keno_tracker_etl
 
 import (
 	"fmt"
-	"github.com/mattsurabian/mass-keno-tracker/pkg/keno-tracker"
-	"github.com/mattsurabian/mass-keno-tracker/pkg/mass-state-lottery"
-	"github.com/mattsurabian/mass-keno-tracker/pkg/redis-cache"
+	"github.com/mattsurabian/mass-keno-tracker-api/pkg/keno-tracker"
+	"github.com/mattsurabian/mass-keno-tracker-api/pkg/mass-state-lottery"
+	"github.com/mattsurabian/mass-keno-tracker-api/pkg/redis-cache"
 	"log"
 	"sync"
 	"time"

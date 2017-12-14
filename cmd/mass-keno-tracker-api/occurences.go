@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/mattsurabian/mass-keno-tracker/pkg/keno-tracker"
+	"github.com/mattsurabian/mass-keno-tracker-api/pkg/keno-tracker"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 

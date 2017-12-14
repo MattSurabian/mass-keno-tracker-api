@@ -2,8 +2,8 @@ package mass_state_lottery
 
 import (
 	"fmt"
-	"github.com/mattsurabian/mass-keno-tracker/pkg/keno-tracker-models"
-	"github.com/mattsurabian/mass-keno-tracker/pkg/redis-cache"
+	"github.com/mattsurabian/mass-keno-tracker-api/pkg/keno-tracker-models"
+	"github.com/mattsurabian/mass-keno-tracker-api/pkg/redis-cache"
 	"log"
 	"time"
 )

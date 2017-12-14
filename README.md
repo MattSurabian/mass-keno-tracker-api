@@ -38,7 +38,7 @@ prefer to keep things "by the book" follow the standard Go pattern and put this
 repo in:
 
 ```
-$GOPATH/src/github.com/mattsurabian/mass-keno-tracker
+$GOPATH/src/github.com/mattsurabian/mass-keno-tracker-api
 ```
 
 ### Build & Run
